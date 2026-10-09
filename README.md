@@ -1,75 +1,46 @@
-# Malbit 공식 홈페이지 — GitHub Pages (베이지 테마)
+# Malbit official site — Beige / October 9, 2026
 
-독립 개발 중인 말빛(Malbit) 소개 홈페이지. HTML / CSS / JavaScript만 사용하며 **빌드·Node·유료 호스팅 없이** GitHub Pages에 게시할 수 있습니다.
+Static GitHub Pages landing page rebuilt to match the *actual* Malbit Windows desktop design rather than a fictional AI-generated interface.
 
-## 파일
+## Grounding
 
-- `index.html` — 사이트 페이지 및 말빛 스타일 작업 공간 미리보기
-- `styles.css` — 베이지 테마, 반응형 레이아웃, 컴포넌트 스타일
-- `script.js` — 한국어/영어 전환 및 장식용 음성 파형 생성
-- `favicon.svg` — 별 모티프 파비콘
-- `.nojekyll` — 정적 파일 그대로 배포
+Source: `Malbit-source-20261009_070256.zip`.
 
-### 화면 미리보기
+- `ui/theme/AppPalette.qml` Beige palette: `#efe7da` background, `#f5eadb` panel, `#fffaf2` panelSoft, `#2f6f73` accent, `#252018` text, `#d2bea4` border.
+- `ui/theme/UiMetrics.qml`: 8/10/12/14/16/18px radius and spacing system.
+- `docs/DESIGN.md`: practical workspace hierarchy, avoid decorative nested cards, semantics-first accents.
+- `ui/assets/tutorial/main_overview_ko.png`: included app UI reference image, optimized to WebP for the site. **The source contains a tutorial visual, not necessarily a screenshot of the latest running build.** Disclosed accordingly on the site.
+- `ui/assets/branding/malbit_app_icon.png`: original app icon, resized for web only.
 
-`index.html`을 브라우저에서 열거나 로컬 웹서버를 실행하세요.
+No invented customer testimonials, model benchmarks, download links, live product functionality, or false corporate claims.
 
-```powershell
-python -m http.server 8000
-```
+## Deploy onto existing GitHub Pages repository
 
-그다음 `http://localhost:8000`을 엽니다.
+Repository: https://github.com/malbitkrofficial/malbit-site
 
-## GitHub Pages 배포
+1. Unzip this archive locally. **Upload the files INSIDE this folder to repository root**. Keep folder hierarchy under `assets/`.
+2. Existing `index.html`, `styles.css`, `script.js`, etc. should be overwritten with same-named replacements. Remove obsolete mockup assets from earlier versions only if known unused.
+3. Keep `CNAME` exactly `malbit.kr`. Do not delete it. `.nojekyll` remains an empty file.
+4. Commit the changes to the existing `main` branch. GitHub Pages redeploys automatically; no new repository necessary.
+5. Refresh https://malbit.kr using a hard refresh if browser cache shows the previous site.
 
-1. GitHub에서 **Public** 저장소 `malbit-site`를 만듭니다. 반드시 **말빛 애플리케이션 소스와 분리**합니다.
-2. 이 폴더의 **내용물 전체** (`index.html`, `styles.css`, `script.js`, `favicon.svg`, `.nojekyll`, `README.md`)를 저장소 최상위(root)에 업로드합니다. ZIP 자체를 업로드하지 마세요.
-3. 저장소 **Settings → Pages → Build and deployment**에서 `Deploy from a branch` / `main` / `/(root)`를 선택하고 저장합니다.
-4. GitHub Pages 주소(`https://<GitHub-username>.github.io/malbit-site/`)가 열리는지 확인합니다.
+**Do not change Gabia DNS for this redesign.** The existing GitHub Pages A/CNAME and ImprovMX MX/SPF email records should be preserved.
 
-## `malbit.kr` 연결 — 순서 중요
+## Contents
 
-**중요:** 가비아 DNS에 GitHub A 레코드를 추가하기 **전에** GitHub Pages에서 Custom domain을 등록하세요. (도메인 탈취 위험 완화)
+- `index.html` — accessible, responsive landing page
+- `styles.css` — implementation grounded in Malbit's Beige UI palette
+- `script.js` — Korean / English copy switch (no external dependencies)
+- `assets/malbit-workspace.webp` — source-provided tutorial UI screenshot optimized for web
+- `assets/malbit-app-icon.png` — source-provided branding icon
+- `assets/favicon.png` — source-provided branding icon resize
+- `assets/malbit-wordmark.png` — source-provided logo crop, available for future revisions
+- `CNAME` — current custom domain
+- `.nojekyll` — static site deployment behavior
 
-1. GitHub 저장소 **Settings → Pages → Custom domain**에 `malbit.kr` 입력 후 **Save**. (branch 배포에서 GitHub가 `CNAME` 파일 자동 생성)
-2. 가비아 DNS 관리툴에서 `malbit.kr`의 기존 MX/TXT 레코드는 **삭제하지 않고**, 다음 항목을 **추가**합니다.
+## Verify
 
-| 타입 | 호스트 | 값/위치 |
-|---|---|---|
-| A | `@` | `185.199.108.153` |
-| A | `@` | `185.199.109.153` |
-| A | `@` | `185.199.110.153` |
-| A | `@` | `185.199.111.153` |
-| CNAME | `www` | `<GitHub-username>.github.io.` |
-
-호스트 `www`는 `www.malbit.kr`을 뜻합니다. `<GitHub-username>`은 본인의 실제 GitHub 계정명으로 바꾸세요. 위 IP는 GitHub 공식 문서에 나오는 Pages 주소(2026-10 확인)입니다. TTL은 기본값으로 둬도 됩니다. 기존 웹사이트 호스트 레코드가 있다면 추가 전 충돌을 점검하세요.
-
-3. GitHub Pages에서 **DNS check** 완료를 기다립니다. (최대 24시간 이상 걸릴 수 있음)
-4. **Enforce HTTPS** 활성화가 가능해지면 체크합니다.
-5. 아래 주소를 각각 확인합니다.
-
-   - `https://malbit.kr/`
-   - `https://www.malbit.kr/` (기본 도메인으로 리디렉션될 수 있음)
-   - `contact@malbit.kr`로 메일 수신 유지 여부
-
-### 현재 메일 DNS — 절대 삭제하지 않기
-
-| 타입 | 호스트 | 값 | Priority |
-|---|---|---|---|
-| MX | `@` | `mx1.improvmx.com.` | 10 |
-| MX | `@` | `mx2.improvmx.com.` | 20 |
-| TXT | `@` | `v=spf1 include:spf.improvmx.com ~all` | — |
-
-> 기존 MX/TXT는 ImprovMX를 통한 `contact@malbit.kr` 메일 수신에 필요합니다. 홈페이지 연결용 A/CNAME 추가와는 독립적으로 유지해야 합니다.
-
-## 정확성 및 공개 정보
-
-- 배경의 말빛 UI는 실제 제품 흐름을 반영해 HTML/CSS로 재구성한 **인터페이스 예시**이며 제품 캡처가 아닙니다.
-- Windows / Android 및 각 기능은 **개발 중**입니다. 실제 출시·사용 가능 여부, 가격, 보안 인증, 고객 실적 등을 주장하지 않습니다.
-- 개인정보나 서버 키, API 인증값을 저장소에 올리지 마세요.
-- 웹사이트는 정적이며 메일 발송 서버나 문의 수집 폼을 제공하지 않습니다. 문의 버튼은 `mailto:contact@malbit.kr`를 엽니다.
-
-## GitHub 공식 문서
-
-- https://docs.github.com/en/pages/getting-started-with-github-pages/configuring-a-publishing-source-for-your-github-pages-site
-- https://docs.github.com/en/pages/configuring-a-custom-domain-for-your-github-pages-site/managing-a-custom-domain-for-your-github-pages-site
+- GitHub Pages Settings should still show `malbit.kr`; HTTPS remains enabled once certificate is ready.
+- `https://malbit.kr/assets/malbit-workspace.webp` should load directly.
+- Test KO/EN switch and `mailto:contact@malbit.kr`.
+- Mobile users can horizontally scroll the actual desktop screenshot rather than see an invented mobile dashboard.
